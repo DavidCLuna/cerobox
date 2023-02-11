@@ -45,28 +45,21 @@ const tableDataColumns = {
         {
             text: 'Nombre del Cliente',
             sortable: false,
-            value: 'client.name',
+            value: 'name',
         },
         {
             text: 'Email del Cliente',
-            value: 'client.email'
+            value: 'email'
         },
         {
-            text: 'Nombre del Servicio',
-            value: 'service.name'
+            text: 'Teléfono del Cliente',
+            value: 'phone'
         },
         {
-            text: 'Tipo del Servicio',
-            value: 'service.type'
+            text: 'Nombres de los Servicios',
+            value: 'services_names'
         },
-        {
-            text: 'Fecha de Inicio',
-            value: 'service.start_date'
-        },
-        {
-            text: 'Fecha Final',
-            value: 'service.end_date'
-        },
+        
     ]
 }
 

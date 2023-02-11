@@ -20,6 +20,8 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';                     
 import InputText from 'primevue/inputtext'
 
+//import sweet alert
+
 const vuetify = createVuetify({
     components,
     directives,

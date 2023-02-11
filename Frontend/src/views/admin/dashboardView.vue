@@ -42,13 +42,13 @@
                 <ColumnP v-for="col of headers.servicesClients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
                 <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
-                        <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                            <v-icon small @click="deleteItem(item)">
-                                mdi-pencil
+                        <v-btn style="color: black;" @click="() => {dataViewServiceClient = slotProps.data; detailServiceClientModal = true;}">
+                            <v-icon small>
+                                mdi-eye
                             </v-icon>
                         </v-btn>
                         <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                            <v-icon small @click="deleteItem(item)">
+                            <v-icon small>
                                 mdi-delete
                             </v-icon>
                         </v-btn>
@@ -60,124 +60,42 @@
                 </template>
             </DataTable>
         </v-content>
-
-        <!-- modal de CRUD de servicios -->
-        <v-dialog v-model="serviceModal" max-width="800">
-            <v-card>
-                <v-card-title>
-                    <h2 class="text-center mt-2">Servicios</h2>
-                </v-card-title>
-                <v-card-text>
-                    <div class="text-right">
-                        <v-btn style="background-color: #005da6; color:white; margin-right: auto;" @click="addChaplainWO">
-                            <v-icon size="25" class="mr-2">mdi-plus</v-icon> Agregar
-                        </v-btn>
-                    </div>
-                    <DataTable :paginator="true" :rows="6" :paginatorTemplate="{
-                '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
-            }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.services" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                        <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
-                        <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
-                            <template #body="slotProps">
-                                <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                                    <v-icon small @click="deleteItem(item)">
-                                        mdi-pencil
-                                    </v-icon>
-                                </v-btn>
-                                <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                                    <v-icon small @click="deleteItem(item)">
-                                        mdi-delete
-                                    </v-icon>
-                                </v-btn>
-                            </template>
-                        </ColumnP>
-
-                        <template #footer>
-                            Total de Servicios: {{ data.services ? data.services.length : 0 }}
-                        </template>
-                    </DataTable>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="error" @click="serviceModal = false">Cerrar</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
+        
         <!-- modal de CRUD de clientes -->
-        <v-dialog v-model="clientModal" max-width="800">
-            <v-card>
-                <v-card-title>
-                    <h2 class="text-center mt-2">Clientes</h2>
-                </v-card-title>
-                <v-card-text>
-                    <div class="text-right">
-                        <v-btn style="background-color: #005da6; color:white; margin-right: auto;" @click="addChaplainWO">
-                            <v-icon size="25" class="mr-2">mdi-plus</v-icon> Agregar
-                        </v-btn>
-                    </div>
-                    <DataTable :paginator="true" :rows="6" :paginatorTemplate="{
-                '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
-            }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.clients" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                        <ColumnP v-for="col of headers.clients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
-                        <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
-                            <template #body="slotProps">
-                                <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                                    <v-icon small @click="deleteItem(item)">
-                                        mdi-pencil
-                                    </v-icon>
-                                </v-btn>
-                                <v-btn style="color: black;" @click="editChaplainWO(slotProps.data)">
-                                    <v-icon small @click="deleteItem(item)">
-                                        mdi-delete
-                                    </v-icon>
-                                </v-btn>
-                            </template>
-                        </ColumnP>
-
-                        <template #footer>
-                            Total de Clientes: {{ data.clients ? data.clients.length : 0 }}
-                        </template>
-                    </DataTable>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="error" @click="clientModal = false">Cerrar</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <ComponentModalClientsVue :showModal="clientModal" @close="closeModalClients" />
+        <ComponentModalServicesVue :showModal="serviceModal" @close="closeModalServices" />
+        <ComponentModalDetailServiceVue :showModal="detailServiceClientModal" @close="closeModalDetailService" :data="dataViewServiceClient"/>
     </v-container>
 </v-app>
-//modal dialog vuetify
 </template>
 
 <script>
 import vueAxios from '../../vueAxios'
 import tableDataColumns from './columns'
+import ComponentModalClientsVue from './components/ComponentModalClients.vue'
+import ComponentModalServicesVue from './components/ComponentModalServices.vue'
+import ComponentModalDetailServiceVue from './components/ComponentModalDetailService.vue'
 
 export default {
     name: 'dashboardView',
+    components: {
+        ComponentModalClientsVue,
+        ComponentModalServicesVue,
+        ComponentModalDetailServiceVue
+    },
     data() {
         return {
             //data for datatable
             serviceModal: false,
-            clientModal: true,
+            dataViewServiceClient: {},
+            clientModal: false,
+            detailServiceClientModal: false,
             isLoading: true,
             tab: null,
             headers: {
-                clients: [],
-                services: [],
                 servicesClients: []
             },
             data: {
-                clients: [],
-                services: [],
                 servicesClients: [],
             },
         }
@@ -186,20 +104,26 @@ export default {
         this.loadInit();
     },
     methods: {
+        closeModalClients() {
+            console.log('closeModalClients')
+            this.clientModal = false
+        },
+        closeModalServices() {
+            console.log('closeModalClients')
+            this.serviceModal = false
+        },
+        closeModalDetailService() {
+            console.log('closeModalDetailService')
+            this.detailServiceClientModal = false
+        },
         async loadInit() {
 
-            this.headers.clients = tableDataColumns.clients;
-            this.headers.services = tableDataColumns.services;
             this.headers.servicesClients = tableDataColumns.service_clients;
 
             // load clients
             Promise.all([
-                vueAxios.get('/api/clients'),
-                vueAxios.get('/api/services'),
                 vueAxios.get('/api/service-clients')
-            ]).then(([clientsResponse, servicesResponse, servicesClientsResponse]) => {
-                this.data.clients = clientsResponse.data.data;
-                this.data.services = servicesResponse.data.data;
+            ]).then(([servicesClientsResponse]) => {
                 this.data.servicesClients = servicesClientsResponse.data.data;
                 this.isLoading = false;
             }).catch(error => {

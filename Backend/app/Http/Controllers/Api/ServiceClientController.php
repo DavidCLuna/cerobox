@@ -13,6 +13,7 @@ class ServiceClientController extends Controller
     public function index()
     {
         // consulta la relacion de clientes y servicios
+        // un cliente puede tener varios servicios, y un
         $data = ServiceClient::with('service', 'client')->get();
         return response()->json(['data' => $data, 'msg' => 'Data queried successfully'], 200);
     }

@@ -12,7 +12,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $data = Service::all();
+        $data = Service::orderBy('id', 'desc')->get();
         return response()->json(['data' => $data, 'msg' => 'Data queried successfully'], 200);
     }
 

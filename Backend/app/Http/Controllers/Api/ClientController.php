@@ -11,7 +11,7 @@ class ClientController extends Controller
     
     public function index()
     {
-        $data = Client::all();
+        $data = Client::orderBy('id', 'desc')->get();
         return response()->json(['data' => $data, 'msg' => 'Data queried successfully'], 200);
     }
 

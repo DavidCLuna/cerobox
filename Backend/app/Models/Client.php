@@ -17,4 +17,9 @@ class Client extends Model
         'image',
         'observations',
     ];
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }

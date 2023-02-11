@@ -17,4 +17,9 @@ class Service extends Model
         'end_date',
         'observations',
     ];
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
+    }
 }

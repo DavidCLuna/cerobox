@@ -64,8 +64,8 @@
                         <v-col cols="12">
                             <v-text-field v-model="form.name" :rules="rules.name" label="Nombre" required outlined></v-text-field>
                             <v-select v-model="form.type" :items="['Basico', 'Avanzado']" :rules="rules.type" label="Tipo de Servicio" required outlined></v-select>
-                            <v-text-field v-model="form.start_date" :rules="rules.start_date" label="Fecha de Inicio" required outlined></v-text-field>
-                            <v-text-field v-model="form.end_date" :rules="rules.end_date" label="Fecha de Finalización" required outlined></v-text-field>
+                            <v-text-field v-model="form.start_date" :rules="rules.start_date" type="date" label="Fecha de Inicio" required outlined></v-text-field>
+                            <v-text-field v-model="form.end_date" :rules="rules.end_date" type="date" label="Fecha de Finalización" required outlined></v-text-field>
                             <v-text-field v-model="form.observations" :rules="rules.observations" label="Observaciones" required outlined></v-text-field>
                         </v-col>
                         <v-col cols="6">
@@ -101,6 +101,7 @@
                             <v-select v-model="formEdit.type" :items="['Basico', 'Avanzado']" :rules="rules.type" label="Tipo de Servicio" required outlined></v-select>
                             <v-text-field v-model="formEdit.start_date" :rules="rules.start_date" type="date" label="Fecha de Inicio" required outlined></v-text-field>
                             <v-text-field v-model="formEdit.end_date" :rules="rules.end_date" type="date" label="Fecha de Finalización" required outlined></v-text-field>
+                            
                             <v-text-field v-model="formEdit.observations" :rules="rules.observations" label="Observaciones" required outlined></v-text-field>
                         </v-col>
                         <v-col cols="6">

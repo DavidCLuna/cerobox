@@ -1,7 +1,7 @@
 # Frontend Cerobox Entrevista
-[Link del Proyecto](https://choosealicense.com/licenses/mit/)
+[Link del Proyecto](https://cerobox.vercel.app/)
 
-### Al clonar el proyecto y correr el proyecto, debe seguir los siguientes pasos:
+## Pasos para instalación y correr el proyecto en local:
 - Instalar dependencias:
 ```bash
 npm install

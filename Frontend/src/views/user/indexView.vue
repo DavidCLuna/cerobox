@@ -1,6 +1,6 @@
 <template>
 <v-app>
-    <v-app-bar app color="primary">
+    <v-app-bar app color="#0072AE" style="color:#ffffff;">
         <v-toolbar-title>Cerobox</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="white" @click="() => {this.$router.push('/admin')}">Admin</v-btn>
@@ -26,8 +26,8 @@
                     '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
                     default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
                 }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.servicesClients" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                <ColumnP v-for="col of headers.servicesClients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
-                <ColumnP field="actions" header="Detalle" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
+                <ColumnP v-for="col of headers.servicesClients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #0072AE; color:white; text-align:center" />
+                <ColumnP field="actions" header="Detalle" headerStyle="background-color: #0072AE; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
                         <v-btn style="color: black;" @click="() => {itemSelected = {...slotProps.data}; detailServiceClientModal = true}">
                             <v-icon small>

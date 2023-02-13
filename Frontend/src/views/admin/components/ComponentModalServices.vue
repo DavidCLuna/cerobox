@@ -9,7 +9,7 @@
         </v-card-title>
         <v-card-text>
             <div class="text-right">
-                <v-btn style="background-color: #005da6; color:white; margin-right: auto;" @click="stateModalRegister = true">
+                <v-btn style="background-color: #0072AE; color:white; margin-right: auto;" @click="stateModalRegister = true">
                     <v-icon size="25" class="mr-2">mdi-plus</v-icon> Agregar
                 </v-btn>
             </div>
@@ -19,8 +19,8 @@
             '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
             default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
         }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
-                <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
+                <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #0072AE; color:white; text-align:center" />
+                <ColumnP field="actions" header="Actions" headerStyle="background-color: #0072AE; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
                         <v-btn style="color: black;" @click="edit(slotProps.data)">
                             <v-icon small>

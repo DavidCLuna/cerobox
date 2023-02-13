@@ -37,7 +37,7 @@
                                     '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
                                     default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
                                 }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.services" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                                <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />    
+                                <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #0072AE; color:white; text-align:center" />    
                                 <template #footer>
                                     Total de Servicios: {{ data.services ? data.services.length : 0 }}
                                 </template>

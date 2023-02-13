@@ -1,6 +1,6 @@
 <template>
 <v-app>
-    <v-app-bar app color="primary">
+    <v-app-bar app color="#0072AE"  style="color:#ffffff;">
         <v-toolbar-title>Cerobox</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="white" @click="logout">Logout</v-btn>
@@ -21,8 +21,8 @@
     <v-container v-if="isLoading!==true">
         <v-content style="margin-left: 4em; margin-right: 4em;" class="mt-15 p-5">
             <div class="d-flex text-left">
-                <v-btn style="background-color: #005da6; color:white;" @click="serviceModal = true">Administrar Servicios</v-btn>
-                <v-btn style="background-color: #005da6; color:white;" class="ml-5" @click="clientModal = true">Administrar Clientes</v-btn>
+                <v-btn style="background-color: #0072AE; color:white;" @click="serviceModal = true">Administrar Servicios</v-btn>
+                <v-btn style="background-color: #0072AE; color:white;" class="ml-5" @click="clientModal = true">Administrar Clientes</v-btn>
             </div>
         </v-content>
 
@@ -33,8 +33,8 @@
                 '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
                 default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
             }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.servicesClients" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
-                <ColumnP v-for="col of headers.servicesClients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
-                <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
+                <ColumnP v-for="col of headers.servicesClients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #0072AE; color:white; text-align:center" />
+                <ColumnP field="actions" header="Actions" headerStyle="background-color: #0072AE; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
                         <v-btn style="color: black;" @click="showDetailServiceClientModal(slotProps.data.id)">
                             <v-icon small>

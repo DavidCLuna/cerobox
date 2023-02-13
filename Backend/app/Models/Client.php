@@ -20,6 +20,11 @@ class Client extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class, 'client_services', 'client_id', 'service_id');
+    }
+
+    public function clientServices()
+    {
+        return $this->hasMany(ClientService::class, 'client_id', 'id');
     }
 }

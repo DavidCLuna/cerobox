@@ -23,5 +23,9 @@ Route::post('/login', 'App\Http\Controllers\Api\UserController@login');
 Route::group(['middleware' => ["auth:sanctum"]], function(){
     Route::resource('clients', 'App\Http\Controllers\Api\ClientController')->only(['index','store','show','update','destroy']);
     Route::resource('services', 'App\Http\Controllers\Api\ServiceController')->only(['index','store','show','update','destroy']);
-    Route::resource('service-clients', 'App\Http\Controllers\Api\ClientServiceController')->only(['index','store','show','update','destroy']);
+    Route::resource('service-clients', 'App\Http\Controllers\Api\ClientServiceController')->only(['store','update']);
+    Route::delete('service-clients/{idClient}/{idService}', 'App\Http\Controllers\Api\ClientServiceController@destroy');
+    Route::get('service-clients/get-services-not-client/{idClient}', 'App\Http\Controllers\Api\ClientServiceController@getServicesNotClient');
 });
+
+Route::resource('service-clients', 'App\Http\Controllers\Api\ClientServiceController')->only(['index','show']);

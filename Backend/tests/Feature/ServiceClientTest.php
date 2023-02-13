@@ -43,7 +43,7 @@ class ServiceClientTest extends TestCase
         $responseClients = $this->post('/api/clients', $client);
 
         $client_service = [
-            'service_id' => $responseServices->json('data')['id'],
+            'services' => [$responseServices->json('data')['id']],
             'client_id' => $responseClients->json('data')['id'],
             'position' => 1,
         ];

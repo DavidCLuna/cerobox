@@ -9,7 +9,7 @@ class ClientService extends Model
 {
     use HasFactory;
 
-    protected $table = 'client_service';
+    protected $table = 'client_services';
     protected $fillable = [
         'service_id',
         'client_id',

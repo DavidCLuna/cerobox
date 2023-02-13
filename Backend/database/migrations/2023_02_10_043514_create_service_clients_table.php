@@ -13,7 +13,7 @@ class CreateServiceClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_service', function (Blueprint $table) {
+        Schema::create('client_services', function (Blueprint $table) {
             $table->id();
             $table->integer('position');
             $table->unsignedBigInteger('service_id');

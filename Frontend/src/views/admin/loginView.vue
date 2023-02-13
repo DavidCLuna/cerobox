@@ -44,7 +44,6 @@ export default {
           }
           vueAxios.post('/api/login', data)
                 .then(response => {
-                    console.log(response)
                     localStorage.setItem('token', response.data.token);
 
                     alert('Login successful')

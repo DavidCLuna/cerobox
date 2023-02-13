@@ -18,7 +18,7 @@
         '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
         '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
         default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
-    }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.clients" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
+    }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
                 <ColumnP v-for="col of headers.clients" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
                 <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
@@ -120,12 +120,12 @@
 
 <script>
 import vueAxios from '../../../vueAxios'
-import tableDataColumns from '../columns'
+import tableDataColumns from '../../columns'
 import Swal from 'sweetalert2'
 
 export default {
     name: 'CRUDModalClients',
-    props: ['showModal'],
+    props: ['showModal', 'data'],
     computed: {
         stateModal() {
             return this.showModal
@@ -160,49 +160,39 @@ export default {
             },
             stateModalRegister: false,
             stateModalEdit: false,
-            isLoading: true,
+            isLoading: false,
             isLoadingRegister: false,
             isLoadingEdit: false,
             itemEdit: {},
             headers: {
                 clients: [],
             },
-            data: {
-                clients: [],
-            }
         }
     },
     mounted() {
-        //this.stateModal = this.showModal
-        this.loadInit()
+        this.headers.clients = tableDataColumns.clients
     },
     methods: {
-        loadInit() {
-            this.isLoading = true
-            this.headers.clients = tableDataColumns.clients
-
-            vueAxios.get('/api/clients')
-                .then(response => {
-                    this.isLoading = false
-                    this.data.clients = response.data.data
-                })
-                .catch(error => {
-                    this.isLoading = false
-                    console.log(error)
-                })
-        },
         async save() {
             let validationResult = await this.$refs.form_register.validate();
 
             if (validationResult.valid) {
                 this.isLoadingRegister = true
                 await vueAxios.post('/api/clients', this.form)
-                    .then(response => {
-                        console.log(response)
-                        this.isLoadingRegister = false
-                        this.stateModalRegister = false
-                        this.loadInit()
-                        this.resetForm()
+                    .then(() => {
+                        Swal.fire(
+                            '¡Agregado!',
+                            'El cliente ha sido registrado exitosamente.',
+                            'success',
+                            //button ok
+                            true
+                        ).then(() => {
+                            this.isLoadingRegister = false
+                            this.stateModalRegister = false
+                            this.$emit('reloadData');
+                            this.resetForm()
+                        })
+
                     })
                     .catch(error => {
                         this.isLoadingRegister = false
@@ -216,12 +206,21 @@ export default {
         update() {
             this.isLoadingEdit = true
             vueAxios.put('/api/clients/' + this.itemEdit.id, this.formEdit)
-                .then(response => {
-                    console.log(response)
-                    this.isLoadingEdit = false
-                    this.stateModalEdit = false
-                    this.loadInit()
-                    this.resetForm()
+                .then(() => {
+                    Swal.fire(
+                        'Actualizado!',
+                        'El cliente ha sido actualizado exitosamente.',
+                        'success',
+                        //button ok
+                        true
+                    ).then(() => {
+                        this.$emit('reloadData');
+                        this.isLoadingEdit = false
+                        this.stateModalEdit = false
+                        this.loadInit()
+                        this.resetForm()
+                    })
+
                 })
                 .catch(error => {
                     this.isLoadingEdit = false
@@ -243,8 +242,8 @@ export default {
                     // Aquí debes colocar el código que realiza la eliminación
                     this.isLoading = true
                     vueAxios.delete('/api/clients/' + id)
-                        .then(response => {
-                            console.log(response)
+                        .then(() => {
+                            this.$emit('reloadData');
                             Swal.fire('Eliminado!', 'El cliente ha sido eliminado.', 'success');
                             this.loadInit()
                         })
@@ -276,7 +275,6 @@ export default {
             this.form.observations = ''
         },
         closeModal() {
-            console.log('close component')
             this.resetForm()
             this.$emit('close');
         },
@@ -286,6 +284,6 @@ export default {
 
 <style>
 .swal2-container {
-  z-index: 99999 !important;
+    z-index: 99999 !important;
 }
 </style>

@@ -18,7 +18,7 @@
             '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
             '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
             default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown'
-        }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data.services" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
+        }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :value="data" class="p-datatable-sm" responsiveLayout="scroll" showGridlines stripedRows>
                 <ColumnP v-for="col of headers.services" :key="col" :field="col.value" :header="col.text" headerStyle="background-color: #005da6; color:white; text-align:center" />
                 <ColumnP field="actions" header="Actions" headerStyle="background-color: #005da6; color:white; text-align:center;  align-items:center; justify-content:center;">
                     <template #body="slotProps">
@@ -118,15 +118,14 @@
 </v-dialog>
 </template>
 
-    
 <script>
 import vueAxios from '../../../vueAxios'
-import tableDataColumns from '../columns'
+import tableDataColumns from '../../columns'
 import Swal from 'sweetalert2'
 
 export default {
     name: 'CRUDModalservices',
-    props: ['showModal'],
+    props: ['showModal', 'data'],
     computed: {
         stateModal() {
             return this.showModal
@@ -159,49 +158,38 @@ export default {
             },
             stateModalRegister: false,
             stateModalEdit: false,
-            isLoading: true,
+            isLoading: false,
             isLoadingRegister: false,
             isLoadingEdit: false,
             itemEdit: {},
             headers: {
                 services: [],
             },
-            data: {
-                services: [],
-            }
         }
     },
     mounted() {
-        //this.stateModal = this.showModal
-        this.loadInit()
+        this.headers.services = tableDataColumns.services
     },
     methods: {
-        loadInit() {
-            this.isLoading = true
-            this.headers.services = tableDataColumns.services
-
-            vueAxios.get('/api/services')
-                .then(response => {
-                    this.isLoading = false
-                    this.data.services = response.data.data
-                })
-                .catch(error => {
-                    this.isLoading = false
-                    console.log(error)
-                })
-        },
         async save() {
             let validationResult = await this.$refs.form_register.validate();
 
             if (validationResult.valid) {
                 this.isLoadingRegister = true
                 await vueAxios.post('/api/services', this.form)
-                    .then(response => {
-                        console.log(response)
-                        this.isLoadingRegister = false
-                        this.stateModalRegister = false
-                        this.loadInit()
-                        this.resetForm()
+                    .then(() => {
+                        Swal.fire(
+                            '¡Agregado!',
+                            'El servicio ha sido registrado exitosamente.',
+                            'success',
+                            //button ok
+                            true
+                        ).then(() => {
+                            this.isLoadingRegister = false
+                            this.stateModalRegister = false
+                            this.$emit('reloadData');
+                            this.resetForm()
+                        })
                     })
                     .catch(error => {
                         this.isLoadingRegister = false
@@ -215,12 +203,19 @@ export default {
         update() {
             this.isLoadingEdit = true
             vueAxios.put('/api/services/' + this.itemEdit.id, this.formEdit)
-                .then(response => {
-                    console.log(response)
-                    this.isLoadingEdit = false
-                    this.stateModalEdit = false
-                    this.loadInit()
-                    this.resetForm()
+                .then(() => {
+                    Swal.fire(
+                        'Actualizado!',
+                        'El servicio ha sido actualizado exitosamente.',
+                        'success',
+                        //button ok
+                        true
+                    ).then(() => {
+                        this.isLoadingEdit = false
+                        this.stateModalEdit = false
+                        this.$emit('reloadData');
+                        this.resetForm()
+                    })
                 })
                 .catch(error => {
                     this.isLoadingEdit = false
@@ -242,10 +237,9 @@ export default {
                     // Aquí debes colocar el código que realiza la eliminación
                     this.isLoading = true
                     vueAxios.delete('/api/services/' + id)
-                        .then(response => {
-                            console.log(response)
+                        .then(() => {
                             Swal.fire('Eliminado!', 'El servicio ha sido eliminado.', 'success');
-                            this.loadInit()
+                            this.$emit('reloadData');
                         })
                         .catch(error => {
                             this.isLoading = false
@@ -284,7 +278,6 @@ export default {
 }
 </script>
 
-    
 <style>
 .swal2-container {
     z-index: 99999 !important;

@@ -1,5 +1,5 @@
 # Backend Cerobox Entrevista
-[Link del Proyecto](https://choosealicense.com/licenses/mit/)
+[Link del Proyecto](https://cerobox.vercel.app/)
 
 ## Pasos para instalación y correr el proyecto en local:
 - Instalar dependencias:
